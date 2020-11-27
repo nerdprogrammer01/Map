@@ -1,6 +1,6 @@
 
 import React,{Component} from 'react';
-import { Button,StyleSheet,TouchableOpacity, View,TextInput, Text, SafeAreaView } from 'react-native';
+import { Button,StyleSheet,TouchableOpacity, View,TextInput, Text, SafeAreaView,Modal } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import
  MaterialCommunityIcons
@@ -8,7 +8,7 @@ from 'react-native-vector-icons/MaterialCommunityIcons';
 import
 MaterialIcons
 from 'react-native-vector-icons/MaterialIcons';
-
+import RNMaterialLetterIcon from 'react-native-material-letter-icon';
 
 class FirstPage extends Component {
     constructor(props){
@@ -16,7 +16,8 @@ class FirstPage extends Component {
         this.state={
             result_data:[],
             filterd_result_data:[],
-            Search:''
+            Search:'',
+            modalVisible: false
 
         }
     }
@@ -130,8 +131,12 @@ navi=()=>{
   this.props.navigation.navigate('ThirdPage',{all_data:this.state.result_data})
 }
 
+setModalVisible = (visible) => {
+  this.setState({ modalVisible: visible });
+}
+
     render(){
-        
+      const { modalVisible } = this.state;
         return (
           
       <View style={{flexDirection:'column'}}>
@@ -158,15 +163,27 @@ navi=()=>{
             />
          
         </View>
+        <TouchableOpacity  onPress={() => {this.setModalVisible(true)}} style={{backgroundColor:'#FF7733',borderRadius:5}}>
+        <View style={{flexDirection:'row',height:40,width:48,marginRight:10}}>
+       
+        <View style={{marginTop:'15%',marginLeft:5}}>
+        <Text style={{color:'white'}}>Filter</Text>
+        </View>
+       
+             
+              <View style={{marginTop:'13%'}}>
         <MaterialIcons
                 name="filter-alt"
-               style={{fontSize:24}}
+               style={{fontSize:22,color:'white'}}
               />
-                <TouchableOpacity onPress={this.navi}> 
+              </View>
+              </View>
+              </TouchableOpacity>
+                {/* <TouchableOpacity onPress={this.navi}> 
              <MaterialCommunityIcons
             name="map"
            style={{fontSize:24,color:'black'}}/>
-           </TouchableOpacity>
+           </TouchableOpacity> */}
         </View>
 
          <FlatList
@@ -177,7 +194,16 @@ navi=()=>{
    <TouchableOpacity>
    <View style={styles.rect}>
         <View style={styles.loremIpsumRow}>
-          <Text style={styles.loremIpsum}>Lorem Ipsum</Text>
+        <RNMaterialLetterIcon
+      size={45}
+      initialsNumber={1}
+      border={false}
+      borderColor={"#dd2c00"}
+      shapeColor={"gray"}
+      letter={item.title}
+      borderSize={2}
+
+      />
           <View style={styles.loremIpsum5Column}>
             <Text style={styles.loremIpsum5}>{item.title}</Text>
             <Text style={styles.loremIpsum6}>{item.subtitle}</Text>
@@ -216,8 +242,56 @@ navi=()=>{
 }
 
 />
+<Modal
+          
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+             
+               <View style={{backgroundColor:'#E6E2E0',width:'100%',height:'15%'}}>
+               <Text style={styles.modalText}>CHOOSE OPTION FROM BELOW</Text>
+               </View>
+               <TouchableOpacity
+                style={{width:'100%',height:'100%'}}
+                onPress={() => {
+                  this.setModalVisible(!modalVisible);
+                }}
+              >
+                <View style={{backgroundColor:'white',width:'100%',height:'20%',borderBottomColor:'#E1DEDD',borderBottomWidth:1}}>
+               <Text style={styles.modalText1}>Assigned to me</Text>
+               </View>
 
+                <View style={{backgroundColor:'white',width:'100%',height:'20%',borderBottomColor:'#E1DEDD',borderBottomWidth:1}}>
+               <Text style={styles.modalText1}>Priority</Text>
+               </View>
+
+                <View style={{backgroundColor:'white',width:'100%',height:'20%',borderBottomColor:'#E1DEDD',borderBottomWidth:1}}>
+               <Text style={styles.modalText1}>Unassigned</Text>
+               </View>
+               <View style={{backgroundColor:'white',width:'100%',height:'20%',borderBottomColor:'#E1DEDD',borderBottomWidth:1}}>
+               <Text style={styles.modalText1}>Everything</Text>
+               </View>
+               </TouchableOpacity>
+              {/* <TouchableOpacity
+                style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                onPress={() => {
+                  this.setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </TouchableOpacity> */}
+            </View>
+          </View>
+        </Modal>
       </View>
+
+      
         
         )
     }
@@ -244,7 +318,8 @@ const styles = StyleSheet.create({
     },
     loremIpsum5: {
       fontFamily: "roboto-regular",
-      color: "#121212"
+      color: "#121212",
+      fontWeight: "bold"
     },
     loremIpsum6: {
       fontFamily: "roboto-regular",
@@ -253,8 +328,8 @@ const styles = StyleSheet.create({
     },
     loremIpsum5Column: {
       width: 147,
-      marginTop: 8,
-      marginBottom: 3
+      marginTop: 2,
+      marginBottom: 3,marginLeft:10
     },
     loremIpsum8: {
       fontFamily: "roboto-regular",
@@ -339,9 +414,44 @@ const styles = StyleSheet.create({
     },
     abv2: {
       fontFamily: "roboto-regular",
-      color: "#121212",
+      color: "white",
       marginTop: 7,
       marginLeft: 170
+    },  centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      width:'80%',borderColor:'black',borderWidth:1,height:'35%',
+      backgroundColor: "white",
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      //elevation: 5
+    },
+    openButton: {
+      backgroundColor: "#F194FF",
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    modalText: {
+      marginBottom: 8,marginTop:6,marginLeft:5,fontSize:12
+    },
+     modalText1: {
+      marginBottom: 8,marginTop:10,marginLeft:15,fontSize:15
     }
   });
   

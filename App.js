@@ -12,6 +12,12 @@ import {
 import
  MaterialCommunityIcons
 from 'react-native-vector-icons/MaterialCommunityIcons';
+import
+MaterialIcons
+from 'react-native-vector-icons/MaterialIcons';
+import
+Feather
+from 'react-native-vector-icons/Feather';
 
 import FirstPage from './screens/FirstPage';
 //import SecondPage from './pages/SecondPage';
@@ -32,7 +38,7 @@ function Home() {
             
             title: 'First Page', //Set Header Title
             headerStyle: {
-              backgroundColor: '#f4511e', //Set Header color
+              backgroundColor: '#FF7733', //Set Header color
             },
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
@@ -93,10 +99,10 @@ function App() {
           name="HomeStack"
           component={Home}
           options={{
-            tabBarLabel: 'Home',
+            tabBarLabel: 'Active',
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons
-                name="home"
+              <MaterialIcons
+                name="assignment"
                 color={color}
                 size={size}
               />
@@ -106,7 +112,7 @@ function App() {
           name="Home"
           component={Home}
           options={{
-            tabBarLabel: 'Home',
+            tabBarLabel: 'Completed',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
                 name="home"
@@ -119,10 +125,23 @@ function App() {
           name="Home2"
           component={Home}
           options={{
-            tabBarLabel: 'Home',
+            tabBarLabel: 'settings',
+            tabBarIcon: ({ color, size }) => (
+              <Feather
+                name="settings"
+                color={color}
+                size={size}
+              />
+            ),
+          }}  />
+          <Tab.Screen
+          name="Home3"
+          component={Home}
+          options={{
+            tabBarLabel: 'Profile',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
-                name="home"
+                name="account-settings"
                 color={color}
                 size={size}
               />

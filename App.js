@@ -19,6 +19,10 @@ import
 Feather
 from 'react-native-vector-icons/Feather';
 
+import
+AntDesign
+from 'react-native-vector-icons/AntDesign';
+//AntDesign
 import FirstPage from './screens/FirstPage';
 //import SecondPage from './pages/SecondPage';
 import ThirdPage from './screens/ThirdPage';
@@ -114,8 +118,8 @@ function App() {
           options={{
             tabBarLabel: 'Completed',
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons
-                name="home"
+              <AntDesign
+                name="checkcircleo"
                 color={color}
                 size={size}
               />

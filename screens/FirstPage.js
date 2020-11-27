@@ -9,6 +9,7 @@ import
 MaterialIcons
 from 'react-native-vector-icons/MaterialIcons';
 import RNMaterialLetterIcon from 'react-native-material-letter-icon';
+import ActionButton from 'react-native-action-button';
 
 class FirstPage extends Component {
     constructor(props){
@@ -16,8 +17,10 @@ class FirstPage extends Component {
         this.state={
             result_data:[],
             filterd_result_data:[],
+            filt_ModelData:[],
             Search:'',
-            modalVisible: false
+            modalVisible: false,
+            f_status:''
 
         }
     }
@@ -40,7 +43,19 @@ class FirstPage extends Component {
                    result_data:result,
                    filterd_result_data:result
                })
-              console.log("result_data",(this.state.result_data))
+            //  console.log("result_data",(this.state.result_data))
+              let ids = data.map(o => o.status)
+              let filtered = data.filter(({status}, index) => !ids.includes(status, index+1));
+              // let obj=[]
+              //  for(let i ;i>=filtered.length; i++){
+              //   obj = filterd[i]['status'].push 
+                
+              //  }
+              // console.log("filterd",obj)
+              this.setState({
+                 filt_ModelData:filtered
+              })
+
           }).catch(error => {
             this.setState({ errorMessage: error.toString() });
             console.error('There was an error!', error);
@@ -59,7 +74,7 @@ class FirstPage extends Component {
                 // Filter the masterDataSource
                 // Update FilteredDataSource
              
-                 newData = this.state.result_data.filter(
+              const newData = this.state.result_data.filter(
                   function (item) {
                     const itemData = item.title
                       ? item.title.toUpperCase()
@@ -78,7 +93,7 @@ class FirstPage extends Component {
                 // Inserted text is blank
                 // Update FilteredDataSource with masterDataSource
                 this.setState({
-                  filterd_result_data:result_data,
+                  filterd_result_data:this.state.result_data,
                   Search:text
                 })
                 // setFilteredDataSource(masterDataSource);
@@ -125,7 +140,28 @@ class FirstPage extends Component {
 //  }
 // }
 
+mFilter=()=>{
+  let data =  this.state.result_data;
+  let filt_opt =  this.state.f_status;
+  var newArray = [];
+  if(filt_opt != ''){
+ data.map(function(mainObject) {
+     for (let i=0; i<data.length; i++){
+          if(data[i]['status'] ===filt_opt){
+             newArray.push(data[i]);
+          }
+     }
+  }
+)
+}
 
+  let ids = newArray.map(o => o.id)
+  let filtered = data.filter(({id}, index) => !ids.includes(id, index+1));
+  console.log(filtered);
+}
+// nFilter=()=>{
+//   console.log("item",this.state.f_status)
+// }
 
 navi=()=>{
   this.props.navigation.navigate('ThirdPage',{all_data:this.state.result_data})
@@ -242,6 +278,16 @@ setModalVisible = (visible) => {
 }
 
 />
+
+      <ActionButton buttonColor="#FF7733"  style={{marginBottom: 50}}>
+          {/*Inner options of the action button*/}
+          {/*Icons here
+             https://infinitered.github.io/ionicons-version-3-search/
+           */}
+        
+        </ActionButton>
+    
+
 <Modal
           
           animationType="slide"
@@ -257,17 +303,26 @@ setModalVisible = (visible) => {
                <View style={{backgroundColor:'#E6E2E0',width:'100%',height:'15%'}}>
                <Text style={styles.modalText}>CHOOSE OPTION FROM BELOW</Text>
                </View>
-               <TouchableOpacity
-                style={{width:'100%',height:'100%'}}
-                onPress={() => {
-                  this.setModalVisible(!modalVisible);
-                }}
-              >
-                <View style={{backgroundColor:'white',width:'100%',height:'20%',borderBottomColor:'#E1DEDD',borderBottomWidth:1}}>
-               <Text style={styles.modalText1}>Assigned to me</Text>
-               </View>
 
-                <View style={{backgroundColor:'white',width:'100%',height:'20%',borderBottomColor:'#E1DEDD',borderBottomWidth:1}}>
+               <FlatList
+      data={ this.state.filt_ModelData }
+      ItemSeparatorComponent = {this.ItemSeparatorLine}
+      keyExtractor={(item, index) => index}
+  renderItem={({item}) => 
+                <TouchableOpacity 
+                onPress={()=>this.mFilter(this.setState({f_status:item.status}))
+                 
+                
+                }
+                >
+                <View style={{borderBottomColor:'black',borderBottomWidth:1,width:300,marginBottom:30}}>
+               <Text style={styles.modalText1}>{item.status}</Text>
+               </View>
+               </TouchableOpacity>
+             
+                 }/>
+
+                {/* <View style={{backgroundColor:'white',width:'100%',height:'20%',borderBottomColor:'#E1DEDD',borderBottomWidth:1}}>
                <Text style={styles.modalText1}>Priority</Text>
                </View>
 
@@ -276,10 +331,11 @@ setModalVisible = (visible) => {
                </View>
                <View style={{backgroundColor:'white',width:'100%',height:'20%',borderBottomColor:'#E1DEDD',borderBottomWidth:1}}>
                <Text style={styles.modalText1}>Everything</Text>
-               </View>
-               </TouchableOpacity>
-              {/* <TouchableOpacity
-                style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+               </View> */}
+              
+            
+              {/*  <TouchableOpacity
+                style={{width:'100%',height:'100%'}}
                 onPress={() => {
                   this.setModalVisible(!modalVisible);
                 }}
@@ -451,7 +507,7 @@ const styles = StyleSheet.create({
       marginBottom: 8,marginTop:6,marginLeft:5,fontSize:12
     },
      modalText1: {
-      marginBottom: 8,marginTop:10,marginLeft:15,fontSize:15
+     fontSize:15
     }
   });
   

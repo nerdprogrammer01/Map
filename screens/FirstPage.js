@@ -2,9 +2,16 @@
 import React,{Component} from 'react';
 import { Button,StyleSheet,TouchableOpacity, View,TextInput, Text, SafeAreaView,Modal } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
+
 import
  MaterialCommunityIcons
 from 'react-native-vector-icons/MaterialCommunityIcons';
+import moment from 'moment/moment';
+import
+FontAwesome5
+from 'react-native-vector-icons/FontAwesome5';
+
 import
 MaterialIcons
 from 'react-native-vector-icons/MaterialIcons';
@@ -102,43 +109,25 @@ class FirstPage extends Component {
             };
           
 
-// options={{
-//   title: 'First Page', //Set Header Title
-//   headerStyle: {
-//     backgroundColor: '#f4511e', //Set Header color
-//   },
-//   headerTintColor: '#fff', //Set Header text color
-//   headerTitleStyle: {
-//     fontWeight: 'bold', //Set Header text style
-//   },
-//   headerRight: ({props}) =>
-//    <TouchableOpacity onPress={()=>this.props.navigation.navigate('ThirdPage')}> 
-//    <MaterialCommunityIcons
-//   name="map"
-//  style={{fontSize:40,marginRight:20,color:'white'}}/>
-//  </TouchableOpacity>
-// }
 
-// }
-
-// static navigationOptions=({ navigation})=>{
-//   return{
-//   title: 'First Page', //Set Header Title
-//   headerStyle: {
-//     backgroundColor: '#f4511e', //Set Header color
-//   },
-//   headerTintColor: '#fff', //Set Header text color
-//   headerTitleStyle: {
-//     fontWeight: 'bold', //Set Header text style
-//   },
-//   headerRight: () =>
-//    <TouchableOpacity onPress={()=>{ navigation.navigate('ThirdPage')}}> 
-//    <MaterialCommunityIcons
-//   name="map"
-//  style={{fontSize:40,marginRight:20,color:'white'}}/>
-//  </TouchableOpacity>
-//  }
-// }
+static navigationOptions=({ navigation})=>{
+  return{
+  title: 'First Page', //Set Header Title
+  headerStyle: {
+    backgroundColor: '#f4511e', //Set Header color
+  },
+  headerTintColor: '#fff', //Set Header text color
+  headerTitleStyle: {
+    fontWeight: 'bold', //Set Header text style
+  },
+  headerRight: () =>
+   <TouchableOpacity onPress={()=>{ navigation.navigate('ThirdPage')}}> 
+   <MaterialCommunityIcons
+  name="map"
+ style={{fontSize:40,marginRight:20,color:'white'}}/>
+ </TouchableOpacity>
+ }
+}
 
 mFilter=()=>{
   let data =  this.state.result_data;
@@ -159,9 +148,9 @@ mFilter=()=>{
   let filtered = data.filter(({id}, index) => !ids.includes(id, index+1));
   console.log(filtered);
 }
-// nFilter=()=>{
-//   console.log("item",this.state.f_status)
-// }
+cloes_modal=(visible)=>{
+  this.setState({ modalVisible: !visible });
+}
 
 navi=()=>{
   this.props.navigation.navigate('ThirdPage',{all_data:this.state.result_data})
@@ -176,6 +165,18 @@ setModalVisible = (visible) => {
         return (
           
       <View style={{flexDirection:'column'}}>
+
+      <LinearGradient colors={['#EC8705','#f4511e']}  start={{x: 1, y: 0}}  end={{x: 0, y: 0}} style={{height:65,backgroundColor: '#f4511e',flexDirection:'row'}}>
+        <Text style={{marginLeft:20,marginTop:16,fontSize:22,color:'white'}}>Assigned to Me</Text>
+        <View style={{width:230 ,flexDirection:'row'}}> 
+        <TouchableOpacity onPress={()=>{ this.props.navigation.navigate('ThirdPage'),{data:this.state.result_data}}}> 
+   <FontAwesome5
+  name="map-marked-alt"
+ style={{fontSize:25,marginTop:13,marginLeft:'85%',color:'white'}}/>
+ </TouchableOpacity>
+ </View>
+
+      </LinearGradient>
           <View style={{flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
             <View style={{ flexDirection: 'row',
     justifyContent: 'center',
@@ -253,8 +254,8 @@ setModalVisible = (visible) => {
                style={{fontSize:22}}
               />
             <Text style={styles.loremIpsum12}>Created:</Text>
-            <Text style={styles.loremIpsum13}>{item.created}</Text>
-            <Text style={styles.abv3}>abv</Text>
+            <Text style={styles.loremIpsum13}>{moment(item.created).format('DD MMM YYYY')}</Text>
+            {/* <Text style={styles.abv3}>abv</Text> */}
           </View>
         </View>
         <View style={styles.abvRow}>
@@ -279,7 +280,7 @@ setModalVisible = (visible) => {
 
 />
 
-      <ActionButton buttonColor="#FF7733"  style={{marginBottom: 50}}>
+      <ActionButton buttonColor="#FF7733"  style={{marginBottom: 110}}>
           {/*Inner options of the action button*/}
           {/*Icons here
              https://infinitered.github.io/ionicons-version-3-search/
@@ -293,9 +294,7 @@ setModalVisible = (visible) => {
           animationType="slide"
           transparent={true}
           visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-          }}
+          
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
@@ -310,10 +309,11 @@ setModalVisible = (visible) => {
       keyExtractor={(item, index) => index}
   renderItem={({item}) => 
                 <TouchableOpacity 
-                onPress={()=>this.mFilter(this.setState({f_status:item.status}))
+                // onPress={()=>this.mFilter(this.setState({f_status:item.status}))
+                onPress={()=> {this.setModalVisible(false)}}
                  
                 
-                }
+                
                 >
                 <View style={{borderBottomColor:'black',borderBottomWidth:1,width:300,marginBottom:30}}>
                <Text style={styles.modalText1}>{item.status}</Text>
@@ -321,27 +321,6 @@ setModalVisible = (visible) => {
                </TouchableOpacity>
              
                  }/>
-
-                {/* <View style={{backgroundColor:'white',width:'100%',height:'20%',borderBottomColor:'#E1DEDD',borderBottomWidth:1}}>
-               <Text style={styles.modalText1}>Priority</Text>
-               </View>
-
-                <View style={{backgroundColor:'white',width:'100%',height:'20%',borderBottomColor:'#E1DEDD',borderBottomWidth:1}}>
-               <Text style={styles.modalText1}>Unassigned</Text>
-               </View>
-               <View style={{backgroundColor:'white',width:'100%',height:'20%',borderBottomColor:'#E1DEDD',borderBottomWidth:1}}>
-               <Text style={styles.modalText1}>Everything</Text>
-               </View> */}
-              
-            
-              {/*  <TouchableOpacity
-                style={{width:'100%',height:'100%'}}
-                onPress={() => {
-                  this.setModalVisible(!modalVisible);
-                }}
-              >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </TouchableOpacity> */}
             </View>
           </View>
         </Modal>
@@ -362,7 +341,7 @@ const styles = StyleSheet.create({
       width: 380,
       height: 198,
       backgroundColor: "#E6E6E6",
-      marginRight: 5,
+      marginRight: 15,
       marginLeft: 15,marginTop:15,backgroundColor:'white'
     },
     loremIpsum: {

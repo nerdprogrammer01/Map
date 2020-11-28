@@ -33,61 +33,65 @@ const Tab = createBottomTabNavigator();
 
 function Home() {
   return (
- 
-      <Stack.Navigator initialRouteName="FirstPage">
-        <Stack.Screen
-          name="FirstPage"
-          component={FirstPage}
-          options={{
+    <Stack.Navigator  screenOptions={{headerShown: false}}r>
+      
+      <Stack.Screen name="FirstPage" component={FirstPage}  />
+      <Stack.Screen name="ThirdPage" component={ThirdPage} />
+    </Stack.Navigator>
+//       <Stack.Navigator initialRouteName="FirstPage">
+//         <Stack.Screen
+//           name="FirstPage"
+//           component={FirstPage}
+//           options={{
             
-            title: 'First Page', //Set Header Title
-            headerStyle: {
-              backgroundColor: '#FF7733', //Set Header color
-            },
-            headerTintColor: '#fff', //Set Header text color
-            headerTitleStyle: {
-              fontWeight: 'bold', //Set Header text style
-            },
-            headerRight: ({navigation}) =>
-             <TouchableOpacity onPress={()=>navigation.navigate('ThirdPage')}> 
-             <MaterialCommunityIcons
-            name="map"
-           style={{fontSize:40,marginRight:20,color:'white'}}/>
-           </TouchableOpacity>
-          }
+//             title: 'First Page', //Set Header Title
+//             headerStyle: {
+//               backgroundColor: '#FF7733', //Set Header color
+//             },
+//             headerTintColor: '#fff', //Set Header text color
+//             headerTitleStyle: {
+//               fontWeight: 'bold', //Set Header text style
+//             },
+//             headerRight: ({navigation}) =>
+//              <TouchableOpacity onPress={()=>navigation.navigate('ThirdPage')}> 
+//              <MaterialCommunityIcons
+//             name="map"
+//            style={{fontSize:40,marginRight:20,color:'white'}}/>
+//            </TouchableOpacity>
+//           }
          
-        }
+//         }
        
-        />
-        {/* <Stack.Screen
-          name="SecondPage"
-          component={SecondPage}
-          options={{
-            title: 'Second Page', //Set Header Title
-            headerStyle: {
-              backgroundColor: '#f4511e', //Set Header color
-            },
-            headerTintColor: '#fff', //Set Header text color
-            headerTitleStyle: {
-              fontWeight: 'bold', //Set Header text style
-            },
-          }}
-        /> */}
-        <Stack.Screen
-          name="ThirdPage"
-          component={ThirdPage}
-          options={{
-            title: 'Third Page', //Set Header Title
-            headerStyle: {
-              backgroundColor: '#f4511e', //Set Header color
-            },
-            headerTintColor: '#fff', //Set Header text color
-            headerTitleStyle: {
-              fontWeight: 'bold', //Set Header text style
-            },
-          }}
-        />
-      </Stack.Navigator>
+//         />
+//         {/* <Stack.Screen
+//           name="SecondPage"
+//           component={SecondPage}
+//           options={{
+//             title: 'Second Page', //Set Header Title
+//             headerStyle: {
+//               backgroundColor: '#f4511e', //Set Header color
+//             },
+//             headerTintColor: '#fff', //Set Header text color
+//             headerTitleStyle: {
+//               fontWeight: 'bold', //Set Header text style
+//             },
+//           }}
+//         /> */}
+//         <Stack.Screen
+//           name="ThirdPage"
+//           component={ThirdPage}
+//           options={{
+//             title: 'Third Page', //Set Header Title
+//             headerStyle: {
+//               backgroundColor: '#f4511e', //Set Header color
+//             },
+//             headerTintColor: '#fff', //Set Header text color
+//             headerTitleStyle: {
+//               fontWeight: 'bold', //Set Header text style
+//             },
+//           }}
+//         />
+//       </Stack.Navigator>
  
   );
 }

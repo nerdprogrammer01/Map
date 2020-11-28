@@ -1,8 +1,11 @@
 // Import React
-import React,{useState} from 'react';
+import React,{Component} from 'react';
 // Import required components
-import {SafeAreaView, StyleSheet, View} from 'react-native';
-
+import {SafeAreaView, StyleSheet,TouchableOpacity, Text,View} from 'react-native';
+import
+ MaterialCommunityIcons
+from 'react-native-vector-icons/MaterialCommunityIcons';
+import LinearGradient from 'react-native-linear-gradient';
 // Import Map and Marker
 import MapView, {Marker} from 'react-native-maps';
 // const { navigation } = this.props;
@@ -21,10 +24,22 @@ import MapView, {Marker} from 'react-native-maps';
 //   </Marker >)
 // }
 
-const ThirdPage = () => {
+class ThirdPage extends Component{
+  constructor(props){
+       super(props);
+      //  this.state={
+      //    Api_data:this.props.route.params.data
+      //  }
+  }
+
+
+  render(){
   return (
     <SafeAreaView style={{flex: 1}}>
+    
       <View style={styles.container}>
+      
+
         <MapView
           style={styles.mapStyle}
           initialRegion={{
@@ -48,8 +63,20 @@ const ThirdPage = () => {
           />
         </MapView>
       </View>
+      <LinearGradient colors={['#EC8705','#f4511e']}  start={{x: 1, y: 0}}  end={{x: 0, y: 0}} style={{height:65,backgroundColor: '#f4511e',flexDirection:'row'}}>
+        <Text style={{marginLeft:20,marginTop:16,fontSize:22,color:'white'}}>Assigned to Me</Text>
+        <View style={{width:230 ,flexDirection:'row'}}> 
+        <TouchableOpacity> 
+   <MaterialCommunityIcons
+  name="format-list-checkbox"
+ style={{fontSize:30,marginTop:15,marginLeft:'80%',color:'white'}}/>
+ </TouchableOpacity>
+ </View>
+
+      </LinearGradient>
     </SafeAreaView>
   );
+}
 };
 
 export default ThirdPage;
@@ -58,81 +85,7 @@ const mapStyle = [
   {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
   {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
   {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-  {
-    featureType: 'administrative.locality',
-    elementType: 'labels.text.fill',
-    stylers: [{color: '#d59563'}],
-  },
-  {
-    featureType: 'poi',
-    elementType: 'labels.text.fill',
-    stylers: [{color: '#d59563'}],
-  },
-  {
-    featureType: 'poi.park',
-    elementType: 'geometry',
-    stylers: [{color: '#263c3f'}],
-  },
-  {
-    featureType: 'poi.park',
-    elementType: 'labels.text.fill',
-    stylers: [{color: '#6b9a76'}],
-  },
-  {
-    featureType: 'road',
-    elementType: 'geometry',
-    stylers: [{color: '#38414e'}],
-  },
-  {
-    featureType: 'road',
-    elementType: 'geometry.stroke',
-    stylers: [{color: '#212a37'}],
-  },
-  {
-    featureType: 'road',
-    elementType: 'labels.text.fill',
-    stylers: [{color: '#9ca5b3'}],
-  },
-  {
-    featureType: 'road.highway',
-    elementType: 'geometry',
-    stylers: [{color: '#746855'}],
-  },
-  {
-    featureType: 'road.highway',
-    elementType: 'geometry.stroke',
-    stylers: [{color: '#1f2835'}],
-  },
-  {
-    featureType: 'road.highway',
-    elementType: 'labels.text.fill',
-    stylers: [{color: '#f3d19c'}],
-  },
-  {
-    featureType: 'transit',
-    elementType: 'geometry',
-    stylers: [{color: '#2f3948'}],
-  },
-  {
-    featureType: 'transit.station',
-    elementType: 'labels.text.fill',
-    stylers: [{color: '#d59563'}],
-  },
-  {
-    featureType: 'water',
-    elementType: 'geometry',
-    stylers: [{color: '#17263c'}],
-  },
-  {
-    featureType: 'water',
-    elementType: 'labels.text.fill',
-    stylers: [{color: '#515c6d'}],
-  },
-  {
-    featureType: 'water',
-    elementType: 'labels.text.stroke',
-    stylers: [{color: '#17263c'}],
-  },
+  
 ];
 
 const styles = StyleSheet.create({
